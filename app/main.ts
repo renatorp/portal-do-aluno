@@ -1,21 +1,24 @@
-// Imports for loading & configuring the in-memory web api
-import { provide }    from '@angular/core';
-import { XHRBackend } from '@angular/http';
-
-import { InMemoryBackendService, SEED_DATA } from 'angular2-in-memory-web-api';
-import { InMemoryDataService }               from './in-memory-data.service';
-
-// The usual bootstrapping imports
 import { bootstrap }      from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { provide } from '@angular/core';
+import { FORM_PROVIDERS } from '@angular/common';
+import { Http, HTTP_PROVIDERS } from '@angular/http';
+import { AuthConfig, AuthHttp } from 'angular2-jwt';
 
 import { AppComponent }   from './app.component';
 
 bootstrap(AppComponent, [
+	FORM_PROVIDERS,
     HTTP_PROVIDERS,
-    provide(XHRBackend, { useClass: InMemoryBackendService }), // in-mem server
-    provide(SEED_DATA,  { useClass: InMemoryDataService })     // in-mem server data
-]);
+    provide(AuthHttp, { 
+    	useFactory: (http) => {
+    		return new AuthHttp(new AuthConfig({
+    			tokenName: 'jwt'
+    		}), http)
+    	},
+    	deps: [Http]
+    })
+]
+);
 
 
 // https://github.com/angular/angular-cli/issues/907   router-deprecated
