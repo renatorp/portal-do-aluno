@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router-deprecated';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { Http, Headers } from '@angular/http';
 import { contentHeaders } from '../common/headers';
+import { LoginService } from '../service/login-service';
 
 @Component({
   selector: 'login-portal',
@@ -29,22 +30,13 @@ import { contentHeaders } from '../common/headers';
 })
 export class LoginPortal{
 
-	constructor(public router: Router, public http: Http) {}
+	constructor(public router: Router, 
+              public http: Http, 
+              public loginService: LoginService) {}
 
 	login(event, username, password) {
     event.preventDefault();
-    let body = JSON.stringify({ username, password });
-    this.http.post('http://localhost:3001/sessions/create', body, { headers: contentHeaders })
-      .subscribe(
-        response => {
-          localStorage.setItem('jwt', response.json().id_token);
-          this.router.parent.navigateByUrl('/home');
-        },
-        error => {
-          alert(error.text());
-          console.log(error.text());
-        }
-      );
+    this.loginService.login(username, password, () => this.router.parent.navigateByUrl('/home'))      
   }
 
 }

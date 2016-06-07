@@ -1,6 +1,6 @@
 import {Directive, Attribute, ViewContainerRef, DynamicComponentLoader} from '@angular/core';
 import {Router, RouterOutlet, ComponentInstruction} from '@angular/router-deprecated';
-import {LoginPortal} from './login/login';
+import {LoginPortal} from '../login/login';
 
 @Directive({
   selector: 'router-outlet'

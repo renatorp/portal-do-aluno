@@ -12,24 +12,17 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var common_1 = require('@angular/common');
 var http_1 = require('@angular/http');
-var headers_1 = require('../common/headers');
+var login_service_1 = require('../service/login-service');
 var LoginPortal = (function () {
-    function LoginPortal(router, http) {
+    function LoginPortal(router, http, loginService) {
         this.router = router;
         this.http = http;
+        this.loginService = loginService;
     }
     LoginPortal.prototype.login = function (event, username, password) {
         var _this = this;
         event.preventDefault();
-        var body = JSON.stringify({ username: username, password: password });
-        this.http.post('http://localhost:3001/sessions/create', body, { headers: headers_1.contentHeaders })
-            .subscribe(function (response) {
-            localStorage.setItem('jwt', response.json().id_token);
-            _this.router.parent.navigateByUrl('/home');
-        }, function (error) {
-            alert(error.text());
-            console.log(error.text());
-        });
+        this.loginService.login(username, password, function () { return _this.router.parent.navigateByUrl('/home'); });
     };
     LoginPortal = __decorate([
         core_1.Component({
@@ -37,7 +30,7 @@ var LoginPortal = (function () {
             template: "\n    \n<div class=\"login jumbotron center-block\">\n  <h1>Login</h1>\n  <form role=\"form\" (submit)=\"login($event, username.value, password.value)\">\n  <div class=\"form-group\">\n    <label for=\"username\">Username</label>\n    <input type=\"text\" #username class=\"form-control\" id=\"username\" placeholder=\"Username\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" #password class=\"form-control\" id=\"password\" placeholder=\"Password\">\n  </div>\n  <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n</form>\n</div>\n\n  ",
             directives: [router_deprecated_1.RouterLink, common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [router_deprecated_1.Router, http_1.Http])
+        __metadata('design:paramtypes', [router_deprecated_1.Router, http_1.Http, login_service_1.LoginService])
     ], LoginPortal);
     return LoginPortal;
 }());

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { RouteConfig, ROUTER_PROVIDERS, RouterLink, Router } from '@angular/router-deprecated';
 import { HomePortal } from './home/home';
 import { LoginPortal } from './login/login';
-import { LoggedInRouterOutlet } from './routing/logged-in-outlet'
+import { LoggedInRouterOutlet } from './routing/logged-in-outlet';
+import { LoginService } from './service/login-service';
 
 @Component({
 	selector: 'portal-aluno',
@@ -17,7 +18,7 @@ import { LoggedInRouterOutlet } from './routing/logged-in-outlet'
 	`,
 	styleUrls: ['app/app.component.css'],
 	directives: [LoggedInRouterOutlet, RouterLink],
-	providers: [ROUTER_PROVIDERS]
+	providers: [ROUTER_PROVIDERS, LoginService]
 })
 @RouteConfig([
   { path: '/',  redirectTo: ['/Home'] },
@@ -27,12 +28,9 @@ import { LoggedInRouterOutlet } from './routing/logged-in-outlet'
 export class AppComponent {
 	title = 'Portal do Aluno';
 
-		constructor(public router: Router) {}
+		constructor(public router: Router, private loginService: LoginService) {}
 
 	  logout() {
-	    // Method to be called when the user wants to logout
-	    // Logging out means just deleting the JWT from localStorage and redirecting the user to the Login page
-	    localStorage.removeItem('jwt');
-	    this.router.navigateByUrl('/login');
+	  		this.loginService.logout(() => this.router.navigateByUrl('/login'));
 	  }
 }
