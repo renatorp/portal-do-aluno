@@ -4,6 +4,7 @@ import { HomePortal } from './home/home';
 import { LoginPortal } from './login/login';
 import { LoggedInRouterOutlet } from './routing/logged-in-outlet';
 import { LoginService } from './service/login-service';
+import { AlunoService } from './service/aluno-service';
 
 @Component({
 	selector: 'portal-aluno',
@@ -18,7 +19,7 @@ import { LoginService } from './service/login-service';
 	`,
 	styleUrls: ['app/app.component.css'],
 	directives: [LoggedInRouterOutlet, RouterLink],
-	providers: [ROUTER_PROVIDERS, LoginService]
+	providers: [ROUTER_PROVIDERS, LoginService, AlunoService]
 })
 @RouteConfig([
   { path: '/',  redirectTo: ['/Home'] },
@@ -28,7 +29,11 @@ import { LoginService } from './service/login-service';
 export class AppComponent {
 	title = 'Portal do Aluno';
 
-		constructor(public router: Router, private loginService: LoginService) {}
+		constructor(public router: Router, private loginService: LoginService, private alunoService: AlunoService) {
+			this.alunoService.getNotas();
+		
+
+		}
 
 	  logout() {
 	  		this.loginService.logout(() => this.router.navigateByUrl('/login'));
