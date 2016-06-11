@@ -11,23 +11,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
+var angular2_jwt_1 = require('angular2-jwt');
 var AlunoService = (function () {
-    function AlunoService(http) {
+    function AlunoService(http, authHttp) {
         this.http = http;
-        this.notasUrl = 'http://localhost:3001/aluno/nota';
+        this.authHttp = authHttp;
+        this.notasUrl = 'http://localhost:3001/api/protected/aluno/nota';
     }
     AlunoService.prototype.getNotas = function () {
-        var _this = this;
-        return this.http.get(this.notasUrl)
-            .subscribe(function (response) { return console.log(response.text()); }, function (error) { return _this.response = error.text(); });
+        return this.authHttp.get(this.notasUrl)
+            .toPromise()
+            .then(this.extractData)
+            .catch(this.handleError);
+        /*.subscribe(
+          data => this.notas = data,
+          error => this.handleError(error.text())
+        );
+  return this.notas;*/
     };
     AlunoService.prototype.handleError = function (error) {
         console.error('Ocorreu um erro!!', error);
         return Promise.reject(error.message || error);
     };
+    AlunoService.prototype.extractData = function (res) {
+        return res.json();
+        //return body.data || { };
+    };
     AlunoService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp])
     ], AlunoService);
     return AlunoService;
 }());

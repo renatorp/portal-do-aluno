@@ -9,17 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var HomePortal = (function () {
-    function HomePortal() {
+var aluno_service_1 = require('../service/aluno-service');
+var base_1 = require('../base/base');
+var NotasPortal = (function () {
+    function NotasPortal(alunoService) {
+        var _this = this;
+        this.alunoService = alunoService;
+        this.notas = [];
+        this.alunoService.getNotas().then(function (notas) { return _this.notas = notas; });
     }
-    HomePortal = __decorate([
+    NotasPortal = __decorate([
         core_1.Component({
-            selector: 'home-portal',
-            template: "\n    <h1>Home</h1>\n  ",
+            templateUrl: 'app/notas/notas.html',
+            directives: [base_1.BasePage]
         }), 
-        __metadata('design:paramtypes', [])
-    ], HomePortal);
-    return HomePortal;
+        __metadata('design:paramtypes', [aluno_service_1.AlunoService])
+    ], NotasPortal);
+    return NotasPortal;
 }());
-exports.HomePortal = HomePortal;
-//# sourceMappingURL=home.tmp.js.map
+exports.NotasPortal = NotasPortal;
+//# sourceMappingURL=notas.js.map

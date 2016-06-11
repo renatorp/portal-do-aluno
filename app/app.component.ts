@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouteConfig, ROUTER_PROVIDERS, RouterLink, Router } from '@angular/router-deprecated';
 import { HomePortal } from './home/home';
 import { LoginPortal } from './login/login';
+import { NotasPortal } from './notas/notas';
 import { LoggedInRouterOutlet } from './routing/logged-in-outlet';
 import { LoginService } from './service/login-service';
 import { AlunoService } from './service/aluno-service';
@@ -9,33 +10,17 @@ import { AlunoService } from './service/aluno-service';
 @Component({
 	selector: 'portal-aluno',
 	template: `
-		<h1>{{title}}</h1>
-		<nav>
-			<a [routerLink]="['Home']">Home</a>
-			<a [routerLink]="['Login']">Login</a>
-			<a href="" (click)="logout()">Logout</a>
-		</nav>
 		<router-outlet></router-outlet>
 	`,
-	styleUrls: ['app/app.component.css'],
 	directives: [LoggedInRouterOutlet, RouterLink],
 	providers: [ROUTER_PROVIDERS, LoginService, AlunoService]
 })
 @RouteConfig([
   { path: '/',  redirectTo: ['/Home'] },
   { path: '/home',  name: 'Home',  component: HomePortal, useAsDefault: true },
-  { path: '/login',  name: 'Login',  component: LoginPortal }
+  { path: '/login',  name: 'Login',  component: LoginPortal },
+  { path: '/notas',  name: 'Notas',  component: NotasPortal }
 ])
 export class AppComponent {
-	title = 'Portal do Aluno';
-
-		constructor(public router: Router, private loginService: LoginService, private alunoService: AlunoService) {
-			this.alunoService.getNotas();
-		
-
-		}
-
-	  logout() {
-	  		this.loginService.logout(() => this.router.navigateByUrl('/login'));
-	  }
+	constructor(private router: Router) {}
 }

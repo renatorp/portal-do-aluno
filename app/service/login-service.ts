@@ -9,7 +9,7 @@ export class LoginService {
 
 	constructor(private http: Http){}
 
-	login(username: string, password: string, callbackSuccess: void) {
+	login(username: string, password: string, callbackSuccess) {
 		let body = JSON.stringify({ username, password });
 	    this.http.post(this.urlLogin, body, { headers: contentHeaders })
 	      .subscribe(
@@ -24,7 +24,7 @@ export class LoginService {
 	    );
 	}
 
-	logout(callbackSuccess: void) {
+	logout(callbackSuccess) {
 
 	    // Method to be called when the user wants to logout
 	    // Logging out means just deleting the JWT from localStorage and redirecting the user to the Login page

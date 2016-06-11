@@ -7,29 +7,12 @@ import { LoginService } from '../service/login-service';
 
 @Component({
   selector: 'login-portal',
-  template: `
-    
-<div class="login jumbotron center-block">
-  <h1>Login</h1>
-  <form role="form" (submit)="login($event, username.value, password.value)">
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" #username class="form-control" id="username" placeholder="Username">
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" #password class="form-control" id="password" placeholder="Password">
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
-</div>
-
-  `,
+  templateUrl: 'app/login/login.html',
     directives: [RouterLink, CORE_DIRECTIVES, FORM_DIRECTIVES ]
 
 })
 export class LoginPortal{
-
+  title = 'Portal do Aluno'
 	constructor(public router: Router, 
               public http: Http, 
               public loginService: LoginService) {}

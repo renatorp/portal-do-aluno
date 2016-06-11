@@ -12,35 +12,28 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var home_1 = require('./home/home');
 var login_1 = require('./login/login');
+var notas_1 = require('./notas/notas');
 var logged_in_outlet_1 = require('./routing/logged-in-outlet');
 var login_service_1 = require('./service/login-service');
 var aluno_service_1 = require('./service/aluno-service');
 var AppComponent = (function () {
-    function AppComponent(router, loginService, alunoService) {
+    function AppComponent(router) {
         this.router = router;
-        this.loginService = loginService;
-        this.alunoService = alunoService;
-        this.title = 'Portal do Aluno';
-        this.alunoService.getNotas();
     }
-    AppComponent.prototype.logout = function () {
-        var _this = this;
-        this.loginService.logout(function () { return _this.router.navigateByUrl('/login'); });
-    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'portal-aluno',
-            template: "\n\t\t<h1>{{title}}</h1>\n\t\t<nav>\n\t\t\t<a [routerLink]=\"['Home']\">Home</a>\n\t\t\t<a [routerLink]=\"['Login']\">Login</a>\n\t\t\t<a href=\"\" (click)=\"logout()\">Logout</a>\n\t\t</nav>\n\t\t<router-outlet></router-outlet>\n\t",
-            styleUrls: ['app/app.component.css'],
+            template: "\n\t\t<router-outlet></router-outlet>\n\t",
             directives: [logged_in_outlet_1.LoggedInRouterOutlet, router_deprecated_1.RouterLink],
             providers: [router_deprecated_1.ROUTER_PROVIDERS, login_service_1.LoginService, aluno_service_1.AlunoService]
         }),
         router_deprecated_1.RouteConfig([
             { path: '/', redirectTo: ['/Home'] },
             { path: '/home', name: 'Home', component: home_1.HomePortal, useAsDefault: true },
-            { path: '/login', name: 'Login', component: login_1.LoginPortal }
+            { path: '/login', name: 'Login', component: login_1.LoginPortal },
+            { path: '/notas', name: 'Notas', component: notas_1.NotasPortal }
         ]), 
-        __metadata('design:paramtypes', [router_deprecated_1.Router, login_service_1.LoginService, aluno_service_1.AlunoService])
+        __metadata('design:paramtypes', [router_deprecated_1.Router])
     ], AppComponent);
     return AppComponent;
 }());

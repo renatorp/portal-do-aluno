@@ -18,6 +18,7 @@ var LoginPortal = (function () {
         this.router = router;
         this.http = http;
         this.loginService = loginService;
+        this.title = 'Portal do Aluno';
     }
     LoginPortal.prototype.login = function (event, username, password) {
         var _this = this;
@@ -27,7 +28,7 @@ var LoginPortal = (function () {
     LoginPortal = __decorate([
         core_1.Component({
             selector: 'login-portal',
-            template: "\n    \n<div class=\"login jumbotron center-block\">\n  <h1>Login</h1>\n  <form role=\"form\" (submit)=\"login($event, username.value, password.value)\">\n  <div class=\"form-group\">\n    <label for=\"username\">Username</label>\n    <input type=\"text\" #username class=\"form-control\" id=\"username\" placeholder=\"Username\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" #password class=\"form-control\" id=\"password\" placeholder=\"Password\">\n  </div>\n  <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n</form>\n</div>\n\n  ",
+            templateUrl: 'app/login/login.html',
             directives: [router_deprecated_1.RouterLink, common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [router_deprecated_1.Router, http_1.Http, login_service_1.LoginService])
