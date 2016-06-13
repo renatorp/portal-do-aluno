@@ -32,11 +32,11 @@
             <li [class.active]="isRouterActive('/Notas')">
                 <a [routerLink]="['Notas']"><i class="fa fa-fw fa-check"></i> Notas</a>
             </li>
-            <li>
-                <a href="#"><i class="fa fa-fw fa-history"></i> Histórico Escolar</a>
+            <li [class.active]="isRouterActive('/HistoricoEscolar')">
+                <a [routerLink]="['HistoricoEscolar']"><i class="fa fa-fw fa-history"></i> Histórico Escolar</a>
             </li>
-            <li>
-                <a href="#"><i class="fa fa-fw fa-book"></i> Grade Curricular</a>
+            <li [class.active]="isRouterActive('/GradeCurricular')">
+                <a [routerLink]="['GradeCurricular']"><i class="fa fa-fw fa-book"></i> Grade Curricular</a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-fw fa-wrench"></i> Solicitações</a>

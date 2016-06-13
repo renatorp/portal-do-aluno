@@ -16,7 +16,10 @@ var AlunoService = (function () {
     function AlunoService(http, authHttp) {
         this.http = http;
         this.authHttp = authHttp;
-        this.notasUrl = 'http://localhost:3001/api/protected/aluno/nota';
+        this.baseUrl = 'http://localhost:3001/api/protected';
+        this.notasUrl = this.baseUrl + '/aluno/nota';
+        this.historicoUrl = this.baseUrl + '/aluno/historico';
+        this.gradeUrl = this.baseUrl + '/aluno/grade';
     }
     AlunoService.prototype.getNotas = function () {
         return this.authHttp.get(this.notasUrl)
@@ -28,6 +31,18 @@ var AlunoService = (function () {
           error => this.handleError(error.text())
         );
   return this.notas;*/
+    };
+    AlunoService.prototype.getHistoricoEscolar = function () {
+        return this.authHttp.get(this.historicoUrl)
+            .toPromise()
+            .then(this.extractData)
+            .catch(this.handleError);
+    };
+    AlunoService.prototype.getGradeCurricular = function () {
+        return this.authHttp.get(this.gradeUrl)
+            .toPromise()
+            .then(this.extractData)
+            .catch(this.handleError);
     };
     AlunoService.prototype.handleError = function (error) {
         console.error('Ocorreu um erro!!', error);

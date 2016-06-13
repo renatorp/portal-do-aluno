@@ -13,6 +13,8 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var home_1 = require('./home/home');
 var login_1 = require('./login/login');
 var notas_1 = require('./notas/notas');
+var historico_escolar_1 = require('./historico-escolar/historico-escolar');
+var grade_curricular_1 = require('./grade-curricular/grade-curricular');
 var logged_in_outlet_1 = require('./routing/logged-in-outlet');
 var login_service_1 = require('./service/login-service');
 var aluno_service_1 = require('./service/aluno-service');
@@ -31,7 +33,9 @@ var AppComponent = (function () {
             { path: '/', redirectTo: ['/Home'] },
             { path: '/home', name: 'Home', component: home_1.HomePortal, useAsDefault: true },
             { path: '/login', name: 'Login', component: login_1.LoginPortal },
-            { path: '/notas', name: 'Notas', component: notas_1.NotasPortal }
+            { path: '/notas', name: 'Notas', component: notas_1.NotasPortal },
+            { path: '/historico', name: 'HistoricoEscolar', component: historico_escolar_1.HistoricoEscolarPortal },
+            { path: '/grade', name: 'GradeCurricular', component: grade_curricular_1.GradeCurricularPortal }
         ]), 
         __metadata('design:paramtypes', [router_deprecated_1.Router])
     ], AppComponent);
