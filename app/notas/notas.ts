@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AlunoService } from '../service/aluno-service';
 import { BasePage } from '../base/base';
-import { Nota } from '../entity/nota'
+import { Nota } from '../entity/nota';
 
 @Component({
   templateUrl: 'app/notas/notas.html',

@@ -7,18 +7,20 @@ import { Atividade } from '../entity/atividade';
 import { Nota } from '../entity/nota';
 import { HistoricoEscolar } from '../entity/historico-escolar';
 import { GradeCurricular } from '../entity/grade-curricular';
+
+
 @Injectable()
 export class AlunoService {
 
 	constructor(private http: Http, public authHttp: AuthHttp) { }
 
-	private baseUrl = 'http://localhost:3001/api/protected';
+	private baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
 	private notasUrl = this.baseUrl + '/aluno/nota';
-	private historicoUrl = this.baseUrl + '/aluno/historico';
+	private historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
 	private gradeUrl = this.baseUrl + '/aluno/grade';
 
 	getNotas(): Promise<Nota[]> {
-	     return this.authHttp.get(this.notasUrl)
+	     return this.http.get(this.notasUrl)
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
@@ -30,15 +32,15 @@ export class AlunoService {
 		  return this.notas;*/
 	}
 
-	getHistoricoEscolar(): Promise<HistoricoEscolar[]> {
-	     return this.authHttp.get(this.historicoUrl)
+	getHistoricoEscolar(idAluno :number): Promise<HistoricoEscolar[]> {
+	     return this.http.get(this.mountUrlWithParam(this.historicoUrl, idAluno))
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
 
 	getGradeCurricular(): Promise<GradeCurricular[]> {
-	     return this.authHttp.get(this.gradeUrl)
+	     return this.http.get(this.gradeUrl)
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
@@ -51,5 +53,9 @@ export class AlunoService {
 	private extractData(res: Response) {
 	  return res.json();
 	  //return body.data || { };
+	}
+
+	private mountUrlWithParam(url :string, param :any) :string {
+		return url.replace('$1', param);
 	}
 }

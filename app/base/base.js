@@ -12,11 +12,15 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var logged_in_outlet_1 = require('../routing/logged-in-outlet');
 var login_service_1 = require('../service/login-service');
+var session_1 = require('../session/session');
 var BasePage = (function () {
-    function BasePage(router, loginService) {
+    function BasePage(router, loginService, session) {
         this.router = router;
         this.loginService = loginService;
+        this.session = session;
         this.title = 'Portal do Aluno';
+        this.user = null;
+        this.user = session.getCurrentUser();
     }
     BasePage.prototype.logout = function () {
         var _this = this;
@@ -31,7 +35,7 @@ var BasePage = (function () {
             templateUrl: 'app/base/base.html',
             directives: [logged_in_outlet_1.LoggedInRouterOutlet, router_deprecated_1.RouterLink]
         }), 
-        __metadata('design:paramtypes', [router_deprecated_1.Router, login_service_1.LoginService])
+        __metadata('design:paramtypes', [router_deprecated_1.Router, login_service_1.LoginService, session_1.Session])
     ], BasePage);
     return BasePage;
 }());

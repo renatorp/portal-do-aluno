@@ -1,20 +1,28 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
+import { Session } from '../session/session';
+import { Usuario } from '../entity/usuario';
 
 @Injectable()
 export class LoginService {
 	
-	private urlLogin = 'http://localhost:3001/sessions/create';
+	private urlLogin = 'https://sistemaacademico.azurewebsites.net/api/Usuarios/Autenticar';
 
-	constructor(private http: Http){}
+	constructor(private http: Http, private session: Session){}
 
 	login(username: string, password: string, callbackSuccess) {
-		let body = JSON.stringify({ username, password });
-	    this.http.post(this.urlLogin, body, { headers: contentHeaders })
+		let body = JSON.stringify({ usuario: username, senha: password });
+		let headers = contentHeaders;
+	    this.http.post(this.urlLogin, body, { headers: headers })
 	      .subscribe(
 	        response => {
-	          localStorage.setItem('jwt', response.json().id_token);
+
+	          let json = response.json();
+	          let token = json.Token;
+	          json.Token = null;
+	          let userObj = <Usuario>JSON.parse(JSON.stringify(json));
+	          this.session.createSession(userObj, token)
 	          callbackSuccess();
 	        },
 	        error => {

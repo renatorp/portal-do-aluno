@@ -11,16 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var headers_1 = require('../common/headers');
+var session_1 = require('../session/session');
 var LoginService = (function () {
-    function LoginService(http) {
+    function LoginService(http, session) {
         this.http = http;
-        this.urlLogin = 'http://localhost:3001/sessions/create';
+        this.session = session;
+        this.urlLogin = 'https://sistemaacademico.azurewebsites.net/api/Usuarios/Autenticar';
     }
     LoginService.prototype.login = function (username, password, callbackSuccess) {
-        var body = JSON.stringify({ username: username, password: password });
-        this.http.post(this.urlLogin, body, { headers: headers_1.contentHeaders })
+        var _this = this;
+        var body = JSON.stringify({ usuario: username, senha: password });
+        var headers = headers_1.contentHeaders;
+        this.http.post(this.urlLogin, body, { headers: headers })
             .subscribe(function (response) {
-            localStorage.setItem('jwt', response.json().id_token);
+            var json = response.json();
+            var token = json.Token;
+            json.Token = null;
+            var userObj = JSON.parse(JSON.stringify(json));
+            _this.session.createSession(userObj, token);
             callbackSuccess();
         }, function (error) {
             alert(error.text());
@@ -35,7 +43,7 @@ var LoginService = (function () {
     };
     LoginService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, session_1.Session])
     ], LoginService);
     return LoginService;
 }());

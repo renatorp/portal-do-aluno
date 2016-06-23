@@ -22,7 +22,7 @@ import { AlunoService } from './service/aluno-service';
   { path: '/home',  name: 'Home',  component: HomePortal, useAsDefault: true },
   { path: '/login',  name: 'Login',  component: LoginPortal },
   { path: '/notas',  name: 'Notas',  component: NotasPortal },
-  { path: '/historico',  name: 'HistoricoEscolar',  component: HistoricoEscolarPortal }
+  { path: '/historico',  name: 'HistoricoEscolar',  component: HistoricoEscolarPortal },
   { path: '/grade',  name: 'GradeCurricular',  component: GradeCurricularPortal }
 ])
 export class AppComponent {

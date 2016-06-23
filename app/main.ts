@@ -3,6 +3,7 @@ import { provide } from '@angular/core';
 import { FORM_PROVIDERS } from '@angular/common';
 import { Http, HTTP_PROVIDERS } from '@angular/http';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
+import { Session } from './session/session';
 
 import { AppComponent }   from './app.component';
 
@@ -16,7 +17,8 @@ bootstrap(AppComponent, [
     		}), http)
     	},
     	deps: [Http]
-    })
+    }),
+    Session
 ]
 );
 

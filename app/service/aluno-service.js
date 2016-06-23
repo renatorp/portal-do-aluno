@@ -16,13 +16,13 @@ var AlunoService = (function () {
     function AlunoService(http, authHttp) {
         this.http = http;
         this.authHttp = authHttp;
-        this.baseUrl = 'http://localhost:3001/api/protected';
+        this.baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
         this.notasUrl = this.baseUrl + '/aluno/nota';
-        this.historicoUrl = this.baseUrl + '/aluno/historico';
+        this.historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
         this.gradeUrl = this.baseUrl + '/aluno/grade';
     }
     AlunoService.prototype.getNotas = function () {
-        return this.authHttp.get(this.notasUrl)
+        return this.http.get(this.notasUrl)
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
@@ -32,14 +32,14 @@ var AlunoService = (function () {
         );
   return this.notas;*/
     };
-    AlunoService.prototype.getHistoricoEscolar = function () {
-        return this.authHttp.get(this.historicoUrl)
+    AlunoService.prototype.getHistoricoEscolar = function (idAluno) {
+        return this.http.get(this.mountUrlWithParam(this.historicoUrl, idAluno))
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
     AlunoService.prototype.getGradeCurricular = function () {
-        return this.authHttp.get(this.gradeUrl)
+        return this.http.get(this.gradeUrl)
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
@@ -51,6 +51,9 @@ var AlunoService = (function () {
     AlunoService.prototype.extractData = function (res) {
         return res.json();
         //return body.data || { };
+    };
+    AlunoService.prototype.mountUrlWithParam = function (url, param) {
+        return url.replace('$1', param);
     };
     AlunoService = __decorate([
         core_1.Injectable(), 
