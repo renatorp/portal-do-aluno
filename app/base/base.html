@@ -15,7 +15,7 @@
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user.Nome}} <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user?.Nome}} <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
                     <a href="" (click)="logout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -29,7 +29,7 @@
             <li [class.active]="isRouterActive('/Home')">
                 <a [routerLink]="['Home']"><i class="fa fa-fw fa-home"></i> Home</a>
             </li>
-            <li [class.active]="isRouterActive('/Notas')">
+            <li [class.active]="isRouterActive('/Notas')" *ngIf="isUsuarioAluno()">
                 <a [routerLink]="['Notas']"><i class="fa fa-fw fa-check"></i> Notas</a>
             </li>
             <li [class.active]="isRouterActive('/HistoricoEscolar')">
@@ -38,9 +38,15 @@
             <li [class.active]="isRouterActive('/GradeCurricular')">
                 <a [routerLink]="['GradeCurricular']"><i class="fa fa-fw fa-book"></i> Grade Curricular</a>
             </li>
-            <li>
-                <a href="#"><i class="fa fa-fw fa-wrench"></i> Solicitações</a>
+           <li>
+                <a href="javascript:;" data-toggle="collapse" data-target=".retFaltas"><i class="fa fa-fw fa-wrench"></i> Solicitações <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="demo" class="collapse retFaltas">
+                    <li>
+                        <a [routerLink]="['RetificacaoFaltas']">Retificação de Faltas</a>
+                    </li>
+                </ul>
             </li>
+
         </ul>
     </div>
     <!-- /.navbar-collapse -->

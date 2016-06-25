@@ -1,7 +1,8 @@
 export class Usuario {
 	Login: string;
 	Nome: string;
-	IdPerfil: string;
+	IdPerfil: number;
 	NomePerfil: string;
 	Id: number;
+	IdMatriculaAtual: number;
 }

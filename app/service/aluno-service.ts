@@ -4,36 +4,33 @@ import { contentHeaders } from '../common/headers';
 import 'rxjs/add/operator/toPromise';
 import { AuthHttp } from 'angular2-jwt';
 import { Atividade } from '../entity/atividade';
-import { Nota } from '../entity/nota';
+import { Usuario } from '../entity/usuario';
+import { Boletim } from '../entity/boletim';
 import { HistoricoEscolar } from '../entity/historico-escolar';
 import { GradeCurricular } from '../entity/grade-curricular';
-
+import { Session } from '../session/session';
+import { RetificacaoFalta } from '../entity/retificacao-falta';
 
 @Injectable()
 export class AlunoService {
 
-	constructor(private http: Http, public authHttp: AuthHttp) { }
+	constructor(private http: Http, private authHttp: AuthHttp, private session: Session) { }
 
 	private baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
-	private notasUrl = this.baseUrl + '/aluno/nota';
+	private notasUrl = this.baseUrl + 'Boletins/$1';
 	private historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
 	private gradeUrl = this.baseUrl + '/aluno/grade';
+	private retificacaoFaltaUrl = this.baseUrl + 'RetificacoesFalta';
 
-	getNotas(): Promise<Nota[]> {
-	     return this.http.get(this.notasUrl)
+	getNotas(matricula :number): Promise<Boletim> {
+	     return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula))
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
-               	
-               	/*.subscribe(
-		          data => this.notas = data,
-		          error => this.handleError(error.text())
-		        );
-		  return this.notas;*/
 	}
 
-	getHistoricoEscolar(idAluno :number): Promise<HistoricoEscolar[]> {
-	     return this.http.get(this.mountUrlWithParam(this.historicoUrl, idAluno))
+	getHistoricoEscolar(matriculaAluno :number): Promise<HistoricoEscolar[]> {
+	     return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno))
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
@@ -45,6 +42,14 @@ export class AlunoService {
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
+
+	getRetificacoesFaltas(matriculaAluno :number): Promise<RetificacaoFalta[]> {
+		return this.http.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno))
+	     		.toPromise()
+                .then(this.extractData)
+                .catch(this.handleError);
+	}
+
 	private handleError(error: any) {
 	    console.error('Ocorreu um erro!!', error);
 	    return Promise.reject(error.message || error);
@@ -56,6 +61,23 @@ export class AlunoService {
 	}
 
 	private mountUrlWithParam(url :string, param :any) :string {
-		return url.replace('$1', param);
+		if (param) {
+			return url.replace('$1', param);
+		}
+		return url;
+	}
+
+	public isUsuarioAluno(usuario: Usuario) :boolean {
+		if (usuario != null && usuario.IdPerfil == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	public isUsuarioProfessor(usuario: Usuario) :boolean {
+		if (usuario != null && usuario.IdPerfil == 2) {
+			return true;
+		}
+		return false;
 	}
 }

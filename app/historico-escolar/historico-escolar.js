@@ -12,25 +12,27 @@ var core_1 = require('@angular/core');
 var aluno_service_1 = require('../service/aluno-service');
 var base_1 = require('../base/base');
 var session_1 = require('../session/session');
-var str2date_pipe_1 = require('../pipes/str2date-pipe');
 var HistoricoEscolarPortal = (function () {
     function HistoricoEscolarPortal(alunoService, session) {
-        var _this = this;
         this.alunoService = alunoService;
         this.session = session;
         this.listaHistorico = [];
         this.usuario = null;
-        this.usuario = this.session.getCurrentUser();
-        this.alunoService.getHistoricoEscolar(this.usuario.Id).then(function (listaHistorico) { return _this.listaHistorico = listaHistorico; });
     }
     HistoricoEscolarPortal.prototype.getDataAsDate = function (dateString) {
         return new Date(dateString);
     };
+    HistoricoEscolarPortal.prototype.ngOnInit = function () {
+        var _this = this;
+        this.usuario = this.session.getCurrentUser();
+        if (this.usuario && this.usuario.Id) {
+            this.alunoService.getHistoricoEscolar(this.usuario.Id).then(function (listaHistorico) { return _this.listaHistorico = listaHistorico; });
+        }
+    };
     HistoricoEscolarPortal = __decorate([
         core_1.Component({
             templateUrl: 'app/historico-escolar/historico-escolar.html',
-            directives: [base_1.BasePage],
-            pipes: [str2date_pipe_1.Str2DatePipe]
+            directives: [base_1.BasePage]
         }), 
         __metadata('design:paramtypes', [aluno_service_1.AlunoService, session_1.Session])
     ], HistoricoEscolarPortal);

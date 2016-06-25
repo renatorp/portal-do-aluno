@@ -6,6 +6,8 @@ var http_1 = require('@angular/http');
 var angular2_jwt_1 = require('angular2-jwt');
 var session_1 = require('./session/session');
 var app_component_1 = require('./app.component');
+//import {enableProdMode} from 'angular2/core';
+//enableProdMode();
 platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [
     common_1.FORM_PROVIDERS,
     http_1.HTTP_PROVIDERS,

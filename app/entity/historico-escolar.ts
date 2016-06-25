@@ -1,7 +1,7 @@
-import { DisciplinaAtividade } from './disciplina-atividade';
+import { NotaDisciplina } from './nota-disciplina';
 
 export class HistoricoEscolar {
 	Id: number;
 	Periodo: number;
-	Disciplinas: Array<DisciplinaAtividade> = [];
+	NotaDisciplinas: Array<NotaDisciplina> = [];
 }	

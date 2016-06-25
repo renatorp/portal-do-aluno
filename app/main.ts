@@ -7,6 +7,9 @@ import { Session } from './session/session';
 
 import { AppComponent }   from './app.component';
 
+//import {enableProdMode} from 'angular2/core';
+//enableProdMode();
+
 bootstrap(AppComponent, [
 	FORM_PROVIDERS,
     HTTP_PROVIDERS,

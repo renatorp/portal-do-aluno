@@ -7,16 +7,20 @@ export class Session {
   constructor() {}
 
   createSession(user: Usuario, jwtToken: string) {
-    localStorage.setItem(this.tokenKey, jwtToken);
-    localStorage.setItem(this.userKey, JSON.stringify(user));
+    sessionStorage.setItem(this.tokenKey, jwtToken);
+    sessionStorage.setItem(this.userKey, JSON.stringify(user));
   }
 
   clearSession() {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userKey);
+    sessionStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.userKey);
   }
 
   getCurrentUser(): Usuario {
-    return <Usuario>JSON.parse(localStorage.getItem(this.userKey));
+    let userJson = sessionStorage.getItem(this.userKey);
+    if (userJson != null) {
+      return <Usuario>JSON.parse(userJson);
+    }
+    return null;
   }
 }

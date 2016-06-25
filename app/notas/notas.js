@@ -11,19 +11,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var aluno_service_1 = require('../service/aluno-service');
 var base_1 = require('../base/base');
+var str2date_pipe_1 = require('../pipes/str2date-pipe');
+var session_1 = require('../session/session');
 var NotasPortal = (function () {
-    function NotasPortal(alunoService) {
-        var _this = this;
+    function NotasPortal(alunoService, session) {
         this.alunoService = alunoService;
-        this.notas = [];
-        this.alunoService.getNotas().then(function (notas) { return _this.notas = notas; });
+        this.session = session;
+        this.boletim = null;
     }
+    NotasPortal.prototype.ngOnInit = function () {
+        var _this = this;
+        var user = this.session.getCurrentUser();
+        if (user && user.IdMatriculaAtual) {
+            this.alunoService.getNotas(user.IdMatriculaAtual).then(function (boletim) { return _this.boletim = boletim; });
+        }
+    };
     NotasPortal = __decorate([
         core_1.Component({
             templateUrl: 'app/notas/notas.html',
-            directives: [base_1.BasePage]
+            directives: [base_1.BasePage],
+            pipes: [str2date_pipe_1.Str2DatePipe]
         }), 
-        __metadata('design:paramtypes', [aluno_service_1.AlunoService])
+        __metadata('design:paramtypes', [aluno_service_1.AlunoService, session_1.Session])
     ], NotasPortal);
     return NotasPortal;
 }());

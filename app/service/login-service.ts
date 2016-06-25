@@ -36,7 +36,7 @@ export class LoginService {
 
 	    // Method to be called when the user wants to logout
 	    // Logging out means just deleting the JWT from localStorage and redirecting the user to the Login page
-	    localStorage.removeItem('jwt');
+	    this.session.clearSession();
 	    callbackSuccess();
 	}
 

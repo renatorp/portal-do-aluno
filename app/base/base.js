@@ -13,15 +13,22 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var logged_in_outlet_1 = require('../routing/logged-in-outlet');
 var login_service_1 = require('../service/login-service');
 var session_1 = require('../session/session');
+var usuario_service_1 = require('../service/usuario-service');
 var BasePage = (function () {
-    function BasePage(router, loginService, session) {
+    function BasePage(router, loginService, session, usuarioService) {
         this.router = router;
         this.loginService = loginService;
         this.session = session;
+        this.usuarioService = usuarioService;
         this.title = 'Portal do Aluno';
         this.user = null;
-        this.user = session.getCurrentUser();
     }
+    BasePage.prototype.ngOnInit = function () {
+        this.user = this.session.getCurrentUser();
+        if (this.user == null || this.user.IdPerfil == null) {
+            this.logout();
+        }
+    };
     BasePage.prototype.logout = function () {
         var _this = this;
         this.loginService.logout(function () { return _this.router.navigateByUrl('/login'); });
@@ -29,13 +36,16 @@ var BasePage = (function () {
     BasePage.prototype.isRouterActive = function (path) {
         return this.router.parent.isRouteActive(this.router.generate([path]));
     };
+    BasePage.prototype.isUsuarioAluno = function () {
+        return this.usuarioService.isUsuarioAluno(this.user);
+    };
     BasePage = __decorate([
         core_1.Component({
             selector: 'base',
             templateUrl: 'app/base/base.html',
             directives: [logged_in_outlet_1.LoggedInRouterOutlet, router_deprecated_1.RouterLink]
         }), 
-        __metadata('design:paramtypes', [router_deprecated_1.Router, login_service_1.LoginService, session_1.Session])
+        __metadata('design:paramtypes', [router_deprecated_1.Router, login_service_1.LoginService, session_1.Session, usuario_service_1.UsuarioService])
     ], BasePage);
     return BasePage;
 }());

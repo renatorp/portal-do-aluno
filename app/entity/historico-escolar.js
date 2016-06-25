@@ -1,7 +1,7 @@
 "use strict";
 var HistoricoEscolar = (function () {
     function HistoricoEscolar() {
-        this.Disciplinas = [];
+        this.NotaDisciplinas = [];
     }
     return HistoricoEscolar;
 }());

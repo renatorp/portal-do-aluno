@@ -12,34 +12,38 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
 var angular2_jwt_1 = require('angular2-jwt');
+var session_1 = require('../session/session');
 var AlunoService = (function () {
-    function AlunoService(http, authHttp) {
+    function AlunoService(http, authHttp, session) {
         this.http = http;
         this.authHttp = authHttp;
+        this.session = session;
         this.baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
-        this.notasUrl = this.baseUrl + '/aluno/nota';
+        this.notasUrl = this.baseUrl + 'Boletins/$1';
         this.historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
         this.gradeUrl = this.baseUrl + '/aluno/grade';
+        this.retificacaoFaltaUrl = this.baseUrl + 'RetificacoesFalta';
     }
-    AlunoService.prototype.getNotas = function () {
-        return this.http.get(this.notasUrl)
+    AlunoService.prototype.getNotas = function (matricula) {
+        return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula))
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
-        /*.subscribe(
-          data => this.notas = data,
-          error => this.handleError(error.text())
-        );
-  return this.notas;*/
     };
-    AlunoService.prototype.getHistoricoEscolar = function (idAluno) {
-        return this.http.get(this.mountUrlWithParam(this.historicoUrl, idAluno))
+    AlunoService.prototype.getHistoricoEscolar = function (matriculaAluno) {
+        return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno))
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
     AlunoService.prototype.getGradeCurricular = function () {
         return this.http.get(this.gradeUrl)
+            .toPromise()
+            .then(this.extractData)
+            .catch(this.handleError);
+    };
+    AlunoService.prototype.getRetificacoesFaltas = function (matriculaAluno) {
+        return this.http.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno))
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
@@ -53,11 +57,26 @@ var AlunoService = (function () {
         //return body.data || { };
     };
     AlunoService.prototype.mountUrlWithParam = function (url, param) {
-        return url.replace('$1', param);
+        if (param) {
+            return url.replace('$1', param);
+        }
+        return url;
+    };
+    AlunoService.prototype.isUsuarioAluno = function (usuario) {
+        if (usuario != null && usuario.IdPerfil == 1) {
+            return true;
+        }
+        return false;
+    };
+    AlunoService.prototype.isUsuarioProfessor = function (usuario) {
+        if (usuario != null && usuario.IdPerfil == 2) {
+            return true;
+        }
+        return false;
     };
     AlunoService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp])
+        __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp, session_1.Session])
     ], AlunoService);
     return AlunoService;
 }());
