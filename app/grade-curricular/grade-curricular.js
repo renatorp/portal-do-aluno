@@ -22,7 +22,7 @@ var GradeCurricularPortal = (function () {
         var _this = this;
         var user = this.session.getCurrentUser();
         if (user && user.IdMatriculaAtual) {
-            this.alunoService.getGradeCurricular(1).then(function (gradeCurricular) { return _this.gradeCurricular = gradeCurricular; });
+            this.alunoService.getGradeCurricular(user.IdMatriculaAtual).then(function (gradeCurricular) { return _this.gradeCurricular = gradeCurricular; });
         }
     };
     GradeCurricularPortal = __decorate([
