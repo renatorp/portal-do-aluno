@@ -32,10 +32,10 @@
             <li [class.active]="isRouterActive('/Notas')" *ngIf="isUsuarioAluno()">
                 <a [routerLink]="['Notas']"><i class="fa fa-fw fa-check"></i> Notas</a>
             </li>
-            <li [class.active]="isRouterActive('/HistoricoEscolar')">
+            <li [class.active]="isRouterActive('/HistoricoEscolar')" *ngIf="isUsuarioAluno()">
                 <a [routerLink]="['HistoricoEscolar']"><i class="fa fa-fw fa-history"></i> Histórico Escolar</a>
             </li>
-            <li [class.active]="isRouterActive('/GradeCurricular')">
+            <li [class.active]="isRouterActive('/GradeCurricular')" *ngIf="isUsuarioAluno()">
                 <a [routerLink]="['GradeCurricular']"><i class="fa fa-fw fa-book"></i> Grade Curricular</a>
             </li>
            <li>

@@ -1,4 +1,7 @@
+import {GradeDisciplina} from './grade-disciplina';
+
 export class GradeCurricular{
-	Disciplina: string;
-	Creditos: number;
+	Id: number;
+	GradeDisciplinas: Array<GradeDisciplina> = [];;
+	Nome: string;
 }

@@ -25,6 +25,12 @@ import { BasePage } from '../base/base';
      </div>
      <!-- /.row -->
 
+      <div class="jumbotron">
+          <h1>Bem Vindo!</h1>
+          <p>Possíveis informativo/avisos ao aluno/professor nesta parte.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum nisl quis justo elementum, id vehicula mi pulvinar. Aenean eget turpis volutpat, volutpat nibh vel, rutrum nisl. Nunc eu ornare sem. Aliquam nunc urna, tristique vitae ornare ac, molestie ac quam. In hac habitasse platea dictumst. Fusce facilisis, enim a porta aliquet, dui enim egestas augue, non eleifend turpis erat at dolor. Sed ultrices risus eu ante tincidunt, at rhoncus nunc molestie.</p>
+      </div>
+
 </div>
 <!-- /.container-fluid -->
 </div>

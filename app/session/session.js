@@ -5,15 +5,15 @@ var Session = (function () {
         this.userKey = 'currentUser';
     }
     Session.prototype.createSession = function (user, jwtToken) {
-        sessionStorage.setItem(this.tokenKey, jwtToken);
-        sessionStorage.setItem(this.userKey, JSON.stringify(user));
+        localStorage.setItem(this.tokenKey, jwtToken);
+        localStorage.setItem(this.userKey, JSON.stringify(user));
     };
     Session.prototype.clearSession = function () {
-        sessionStorage.removeItem(this.tokenKey);
-        sessionStorage.removeItem(this.userKey);
+        localStorage.removeItem(this.tokenKey);
+        localStorage.removeItem(this.userKey);
     };
     Session.prototype.getCurrentUser = function () {
-        var userJson = sessionStorage.getItem(this.userKey);
+        var userJson = localStorage.getItem(this.userKey);
         if (userJson != null) {
             return JSON.parse(userJson);
         }

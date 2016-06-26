@@ -11,19 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var aluno_service_1 = require('../service/aluno-service');
 var base_1 = require('../base/base');
+var session_1 = require('../session/session');
 var GradeCurricularPortal = (function () {
-    function GradeCurricularPortal(alunoService) {
-        var _this = this;
+    function GradeCurricularPortal(alunoService, session) {
         this.alunoService = alunoService;
-        this.listaGradeCurricular = [];
-        this.alunoService.getGradeCurricular().then(function (listaGradeCurricular) { return _this.listaGradeCurricular = listaGradeCurricular; });
+        this.session = session;
+        this.gradeCurricular = null;
     }
+    GradeCurricularPortal.prototype.ngOnInit = function () {
+        var _this = this;
+        var user = this.session.getCurrentUser();
+        if (user && user.IdMatriculaAtual) {
+            this.alunoService.getGradeCurricular(1).then(function (gradeCurricular) { return _this.gradeCurricular = gradeCurricular; });
+        }
+    };
     GradeCurricularPortal = __decorate([
         core_1.Component({
             templateUrl: 'app/grade-curricular/grade-curricular.html',
             directives: [base_1.BasePage]
         }), 
-        __metadata('design:paramtypes', [aluno_service_1.AlunoService])
+        __metadata('design:paramtypes', [aluno_service_1.AlunoService, session_1.Session])
     ], GradeCurricularPortal);
     return GradeCurricularPortal;
 }());

@@ -20,7 +20,7 @@ var AlunoService = (function () {
         this.baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
         this.notasUrl = this.baseUrl + 'Boletins/$1';
         this.historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
-        this.gradeUrl = this.baseUrl + '/aluno/grade';
+        this.gradeUrl = this.baseUrl + 'Alunos/$1/GradeCurricular';
     }
     AlunoService.prototype.getNotas = function (matricula) {
         return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula), { headers: headers_1.contentHeaders })
@@ -34,8 +34,8 @@ var AlunoService = (function () {
             .then(this.extractData)
             .catch(this.handleError);
     };
-    AlunoService.prototype.getGradeCurricular = function () {
-        return this.http.get(this.gradeUrl, { headers: headers_1.contentHeaders })
+    AlunoService.prototype.getGradeCurricular = function (matriculaAluno) {
+        return this.http.get(this.mountUrlWithParam(this.gradeUrl, matriculaAluno), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
