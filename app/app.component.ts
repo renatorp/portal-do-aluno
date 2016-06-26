@@ -7,10 +7,12 @@ import { RetificacaoFaltasPortal } from './retificacao-faltas/retificacao-faltas
 import { HistoricoEscolarPortal } from './historico-escolar/historico-escolar';
 import { GradeCurricularPortal } from './grade-curricular/grade-curricular';
 import { RetifFaltasCreateAlunoPortal } from './retificacao-faltas/retif-faltas-create-aluno';
+import { RetifFaltasEditProfPortal } from './retificacao-faltas/retif-faltas-edit-prof';
 import { LoggedInRouterOutlet } from './routing/logged-in-outlet';
 import { LoginService } from './service/login-service';
 import { AlunoService } from './service/aluno-service';
 import { UsuarioService } from './service/usuario-service';
+import { DisciplinaService } from './service/disciplina-service';
 
 @Component({
 	selector: 'portal-aluno',
@@ -18,7 +20,11 @@ import { UsuarioService } from './service/usuario-service';
 		<router-outlet></router-outlet>
 	`,
 	directives: [LoggedInRouterOutlet, RouterLink],
-	providers: [ROUTER_PROVIDERS, LoginService, AlunoService, UsuarioService]
+	providers: [ROUTER_PROVIDERS, 
+              LoginService, 
+              AlunoService, 
+              UsuarioService, 
+              DisciplinaService]
 })
 @RouteConfig([
   { path: '/',  redirectTo: ['/Home'] },
@@ -28,7 +34,7 @@ import { UsuarioService } from './service/usuario-service';
   { path: '/historico',  name: 'HistoricoEscolar',  component: HistoricoEscolarPortal },
   { path: '/grade',  name: 'GradeCurricular',  component: GradeCurricularPortal },
   { path: '/retificacao',  name: 'RetificacaoFaltas',  component: RetificacaoFaltasPortal },
-  //{ path: '/retificacao/aprovar',name: 'RetifFaltasEditProf',  component: RetifFaltasEditProfPortal },
+  { path: '/retificacao/aprovar',name: 'RetifFaltasEditProf',  component: RetifFaltasEditProfPortal },
   {path:'/retificacao/criar',name:'RetifFaltasCreateAluno',component: RetifFaltasCreateAlunoPortal}
 ])
 export class AppComponent {

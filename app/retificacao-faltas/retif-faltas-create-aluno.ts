@@ -1,31 +1,36 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
-import { AlunoService } from '../service/aluno-service';
+import { RetificacaoFaltasService } from '../service/retificacao-faltas-service';
 import { UsuarioService } from '../service/usuario-service';
+import { DisciplinaService } from '../service/disciplina-service';
 import { BasePage } from '../base/base';
 import { Session } from '../session/session';
 import { RetificacaoFalta } from '../entity/retificacao-falta';
 import { Usuario } from '../entity/usuario';
+import { OfertaDisciplina } from '../entity/oferta-disciplina';
 
 declare var jQuery:any;
 
 @Component({
   templateUrl: 'app/retificacao-faltas/retif-faltas-create-aluno.html',
-  directives: [BasePage]
+  directives: [BasePage],
+  providers: [RetificacaoFaltasService]
 })
 export class  RetifFaltasCreateAlunoPortal implements OnInit {
 
-	retFalta: RetificacaoFalta = new RetificacaoFalta();
+	@Input() retFalta: RetificacaoFalta = new RetificacaoFalta();
 	usuario: Usuario = null;
 	error: any;
+	disciplinas: OfertaDisciplina[] = [];
 
 
 	constructor(
-		private alunoService: AlunoService, 
+		private retificacaoFaltasService: RetificacaoFaltasService, 
 		private usuarioService: UsuarioService, 
 		private session: Session,
 		private router: Router,
-		private elementRef: ElementRef
+		private elementRef: ElementRef,
+		private disciplinaService: DisciplinaService
 	) {
 		this.usuario = this.session.getCurrentUser();
 	}
@@ -38,22 +43,46 @@ export class  RetifFaltasCreateAlunoPortal implements OnInit {
 		jQuery(this.elementRef.nativeElement).find('#datePicker').datepicker({
             format: 'dd/mm/yyyy'
         });
+
+        if (this.usuario && this.usuario.IdMatriculaAtual) {
+        	this.disciplinaService.getDisciplinasByMatricula(this.usuario.IdMatriculaAtual).then(
+				disciplinas => this.disciplinas = disciplinas
+			);
+        }
+
 	}
 
 	public isUsuarioAluno(): boolean {
         return this.usuarioService.isUsuarioAluno(this.usuario);
     }
 
-    public salvarSolicitacao() {
-    	this.alunoService.solicitarRetificacaoFalta(this.retFalta)
-        	.then(retificacaoFalta => {
-          		this.voltar();
-        	})
-        .catch(error => this.error = error); // TODO: Display error message
+    public criarSolicitacao() {
+    	
+    	if (this.validarDados()) {
+    		this.retFalta.IdMatricula = this.usuario.IdMatriculaAtual;
+
+	    	this.retificacaoFaltasService.solicitarRetificacaoFalta(this.retFalta)
+	        	.then(retificacaoFalta => {
+	          		this.voltar();
+	        	})
+	        .catch(error => alert('Ocorreu um erro:' + error)); // TODO: Display error message
+	    	
+    	}
+
+  	}
+
+  	private validarDados() {
+  		if (this.retFalta.DataFalta == null || this.retFalta.IdOferta == null || this.retFalta.Justificativa == null) {
+  			alert("Todos os campos são obrigatórios!");
+  			return false;
+  		}
+
+  		return true;
+
   	}
 
   	public voltar() {
-    	window.history.back();
-  }
+    	this.router.parent.navigate(['RetificacaoFaltas']);
+  	}
 
 }

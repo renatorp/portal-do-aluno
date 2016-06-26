@@ -13,52 +13,38 @@ var http_1 = require('@angular/http');
 var headers_1 = require('../common/headers');
 require('rxjs/add/operator/toPromise');
 var angular2_jwt_1 = require('angular2-jwt');
-var AlunoService = (function () {
-    function AlunoService(http, authHttp) {
+var DisciplinaService = (function () {
+    function DisciplinaService(http, authHttp) {
         this.http = http;
         this.authHttp = authHttp;
         this.baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
-        this.notasUrl = this.baseUrl + 'Boletins/$1';
-        this.historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
-        this.gradeUrl = this.baseUrl + '/aluno/grade';
+        this.disciplinasUrl = this.baseUrl + 'Disciplinas/Matricula/$1';
     }
-    AlunoService.prototype.getNotas = function (matricula) {
-        return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula), { headers: headers_1.contentHeaders })
+    DisciplinaService.prototype.getDisciplinasByMatricula = function (matricula) {
+        return this.http.get(this.mountUrlWithParam(this.disciplinasUrl, matricula), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
-    AlunoService.prototype.getHistoricoEscolar = function (matriculaAluno) {
-        return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno), { headers: headers_1.contentHeaders })
-            .toPromise()
-            .then(this.extractData)
-            .catch(this.handleError);
-    };
-    AlunoService.prototype.getGradeCurricular = function () {
-        return this.http.get(this.gradeUrl, { headers: headers_1.contentHeaders })
-            .toPromise()
-            .then(this.extractData)
-            .catch(this.handleError);
-    };
-    AlunoService.prototype.handleError = function (error) {
+    DisciplinaService.prototype.handleError = function (error) {
         console.error('Ocorreu um erro!!', error);
         return Promise.reject(error.message || error);
     };
-    AlunoService.prototype.extractData = function (res) {
+    DisciplinaService.prototype.extractData = function (res) {
         return res.json();
         //return body.data || { };
     };
-    AlunoService.prototype.mountUrlWithParam = function (url, param) {
+    DisciplinaService.prototype.mountUrlWithParam = function (url, param) {
         if (param) {
             return url.replace('$1', param);
         }
         return url;
     };
-    AlunoService = __decorate([
+    DisciplinaService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp])
-    ], AlunoService);
-    return AlunoService;
+    ], DisciplinaService);
+    return DisciplinaService;
 }());
-exports.AlunoService = AlunoService;
-//# sourceMappingURL=aluno-service.js.map
+exports.DisciplinaService = DisciplinaService;
+//# sourceMappingURL=disciplina-service.js.map

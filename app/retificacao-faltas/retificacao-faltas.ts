@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlunoService } from '../service/aluno-service';
+import { RetificacaoFaltasService } from '../service/retificacao-faltas-service';
 import { UsuarioService } from '../service/usuario-service';
 import { BasePage } from '../base/base';
 import { Str2DatePipe } from '../pipes/str2date-pipe';
@@ -11,14 +11,15 @@ import { Router } from '@angular/router-deprecated';
 @Component({
   templateUrl: 'app/retificacao-faltas/retificacao-faltas.html',
   directives: [BasePage],
-  pipes: [Str2DatePipe]
+  pipes: [Str2DatePipe],
+  providers: [RetificacaoFaltasService]
 })
 export class RetificacaoFaltasPortal implements OnInit {
 
 	listaRetificacao: RetificacaoFalta[] = [];
 	usuario: Usuario = null;
 
-	constructor(private alunoService: AlunoService, 
+	constructor(private retificacaoFaltasService: RetificacaoFaltasService, 
 				private usuarioService: UsuarioService, 
 				private session: Session,
 				private router: Router) {
@@ -27,16 +28,23 @@ export class RetificacaoFaltasPortal implements OnInit {
 
 	ngOnInit(){
 		let user = this.session.getCurrentUser();
-		if (user && user.IdMatriculaAtual) {
-			this.alunoService.getRetificacoesFaltas(user.IdMatriculaAtual).then(
-				listaRetificacao => {
-					if (this.isUsuarioProfessor()) {
-						this.listaRetificacao = listaRetificacao;
-					} else {
-						this.listaRetificacao = listaRetificacao.filter(item => this.isExibirRegistro(item));
-					}
-				}
-			);
+		if (user && user.IdMatriculaAtual && this.isUsuarioAluno()) {
+
+		this.retificacaoFaltasService
+		.getRetificacoesFaltasByMatricula(user.IdMatriculaAtual)
+		.then(listaRetificacao => {
+				this.listaRetificacao = listaRetificacao
+						.filter(item => this.isExibirRegistro(item));
+			}
+		);
+
+		} else {
+			if (this.isUsuarioProfessor()) {
+				this.retificacaoFaltasService.getTodasSolicitacoes().then(
+				listaRetificacao => this.listaRetificacao = listaRetificacao
+			);	
+			}
+
 		}
 	}
 
@@ -67,6 +75,12 @@ export class RetificacaoFaltasPortal implements OnInit {
     	if (this.isUsuarioAluno()) {
     		this.router.parent.navigate(['RetifFaltasCreateAluno']);
     	} 
+    }
+
+    public acessarRetificacao(retItem: RetificacaoFalta) {
+    	if (this.isUsuarioProfessor()) {
+    		this.router.parent.navigate(['RetifFaltasEditProf', {id: retItem.Id}]);
+    	} 	
     }
 
 }

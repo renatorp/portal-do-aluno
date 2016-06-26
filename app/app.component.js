@@ -17,10 +17,12 @@ var retificacao_faltas_1 = require('./retificacao-faltas/retificacao-faltas');
 var historico_escolar_1 = require('./historico-escolar/historico-escolar');
 var grade_curricular_1 = require('./grade-curricular/grade-curricular');
 var retif_faltas_create_aluno_1 = require('./retificacao-faltas/retif-faltas-create-aluno');
+var retif_faltas_edit_prof_1 = require('./retificacao-faltas/retif-faltas-edit-prof');
 var logged_in_outlet_1 = require('./routing/logged-in-outlet');
 var login_service_1 = require('./service/login-service');
 var aluno_service_1 = require('./service/aluno-service');
 var usuario_service_1 = require('./service/usuario-service');
+var disciplina_service_1 = require('./service/disciplina-service');
 var AppComponent = (function () {
     function AppComponent(router) {
         this.router = router;
@@ -30,7 +32,11 @@ var AppComponent = (function () {
             selector: 'portal-aluno',
             template: "\n\t\t<router-outlet></router-outlet>\n\t",
             directives: [logged_in_outlet_1.LoggedInRouterOutlet, router_deprecated_1.RouterLink],
-            providers: [router_deprecated_1.ROUTER_PROVIDERS, login_service_1.LoginService, aluno_service_1.AlunoService, usuario_service_1.UsuarioService]
+            providers: [router_deprecated_1.ROUTER_PROVIDERS,
+                login_service_1.LoginService,
+                aluno_service_1.AlunoService,
+                usuario_service_1.UsuarioService,
+                disciplina_service_1.DisciplinaService]
         }),
         router_deprecated_1.RouteConfig([
             { path: '/', redirectTo: ['/Home'] },
@@ -40,7 +46,7 @@ var AppComponent = (function () {
             { path: '/historico', name: 'HistoricoEscolar', component: historico_escolar_1.HistoricoEscolarPortal },
             { path: '/grade', name: 'GradeCurricular', component: grade_curricular_1.GradeCurricularPortal },
             { path: '/retificacao', name: 'RetificacaoFaltas', component: retificacao_faltas_1.RetificacaoFaltasPortal },
-            //{ path: '/retificacao/aprovar',name: 'RetifFaltasEditProf',  component: RetifFaltasEditProfPortal },
+            { path: '/retificacao/aprovar', name: 'RetifFaltasEditProf', component: retif_faltas_edit_prof_1.RetifFaltasEditProfPortal },
             { path: '/retificacao/criar', name: 'RetifFaltasCreateAluno', component: retif_faltas_create_aluno_1.RetifFaltasCreateAlunoPortal }
         ]), 
         __metadata('design:paramtypes', [router_deprecated_1.Router])
