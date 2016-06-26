@@ -19,36 +19,46 @@ export class AlunoService {
 	private baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
 	private notasUrl = this.baseUrl + 'Boletins/$1';
 	private historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
+	private solicitarRetifFaltaUrl = this.baseUrl + 'RetificacoesFalta';
 	private gradeUrl = this.baseUrl + '/aluno/grade';
 	private retificacaoFaltaUrl = this.baseUrl + 'RetificacoesFalta';
 
 	getNotas(matricula :number): Promise<Boletim> {
-	     return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula))
+	     return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula), { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
 
 	getHistoricoEscolar(matriculaAluno :number): Promise<HistoricoEscolar[]> {
-	     return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno))
+	     return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno), { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
 
 	getGradeCurricular(): Promise<GradeCurricular[]> {
-	     return this.http.get(this.gradeUrl)
+	     return this.http.get(this.gradeUrl, { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
 
 	getRetificacoesFaltas(matriculaAluno :number): Promise<RetificacaoFalta[]> {
-		return this.http.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno))
+		return this.http.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno),{ headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
+
+	solicitarRetificacaoFalta(solicitacao :RetificacaoFalta): Promise<RetificacaoFalta> {
+    	return this.http
+               .post(this.solicitarRetifFaltaUrl, JSON.stringify(solicitacao), { headers: contentHeaders })
+               .toPromise()
+               .then(res => res.json().data)
+               .catch(this.handleError);
+  	}
+
 
 	private handleError(error: any) {
 	    console.error('Ocorreu um erro!!', error);
@@ -65,19 +75,5 @@ export class AlunoService {
 			return url.replace('$1', param);
 		}
 		return url;
-	}
-
-	public isUsuarioAluno(usuario: Usuario) :boolean {
-		if (usuario != null && usuario.IdPerfil == 1) {
-			return true;
-		}
-		return false;
-	}
-
-	public isUsuarioProfessor(usuario: Usuario) :boolean {
-		if (usuario != null && usuario.IdPerfil == 2) {
-			return true;
-		}
-		return false;
 	}
 }

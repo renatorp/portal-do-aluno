@@ -16,6 +16,7 @@ var notas_1 = require('./notas/notas');
 var retificacao_faltas_1 = require('./retificacao-faltas/retificacao-faltas');
 var historico_escolar_1 = require('./historico-escolar/historico-escolar');
 var grade_curricular_1 = require('./grade-curricular/grade-curricular');
+var retif_faltas_create_aluno_1 = require('./retificacao-faltas/retif-faltas-create-aluno');
 var logged_in_outlet_1 = require('./routing/logged-in-outlet');
 var login_service_1 = require('./service/login-service');
 var aluno_service_1 = require('./service/aluno-service');
@@ -38,7 +39,9 @@ var AppComponent = (function () {
             { path: '/notas', name: 'Notas', component: notas_1.NotasPortal },
             { path: '/historico', name: 'HistoricoEscolar', component: historico_escolar_1.HistoricoEscolarPortal },
             { path: '/grade', name: 'GradeCurricular', component: grade_curricular_1.GradeCurricularPortal },
-            { path: '/retificacaoFaltas', name: 'RetificacaoFaltas', component: retificacao_faltas_1.RetificacaoFaltasPortal }
+            { path: '/retificacao', name: 'RetificacaoFaltas', component: retificacao_faltas_1.RetificacaoFaltasPortal },
+            //{ path: '/retificacao/aprovar',name: 'RetifFaltasEditProf',  component: RetifFaltasEditProfPortal },
+            { path: '/retificacao/criar', name: 'RetifFaltasCreateAluno', component: retif_faltas_create_aluno_1.RetifFaltasCreateAlunoPortal }
         ]), 
         __metadata('design:paramtypes', [router_deprecated_1.Router])
     ], AppComponent);

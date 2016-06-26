@@ -6,6 +6,7 @@ import { NotasPortal } from './notas/notas';
 import { RetificacaoFaltasPortal } from './retificacao-faltas/retificacao-faltas';
 import { HistoricoEscolarPortal } from './historico-escolar/historico-escolar';
 import { GradeCurricularPortal } from './grade-curricular/grade-curricular';
+import { RetifFaltasCreateAlunoPortal } from './retificacao-faltas/retif-faltas-create-aluno';
 import { LoggedInRouterOutlet } from './routing/logged-in-outlet';
 import { LoginService } from './service/login-service';
 import { AlunoService } from './service/aluno-service';
@@ -26,7 +27,9 @@ import { UsuarioService } from './service/usuario-service';
   { path: '/notas',  name: 'Notas',  component: NotasPortal },
   { path: '/historico',  name: 'HistoricoEscolar',  component: HistoricoEscolarPortal },
   { path: '/grade',  name: 'GradeCurricular',  component: GradeCurricularPortal },
-  { path: '/retificacaoFaltas',  name: 'RetificacaoFaltas',  component: RetificacaoFaltasPortal }
+  { path: '/retificacao',  name: 'RetificacaoFaltas',  component: RetificacaoFaltasPortal },
+  //{ path: '/retificacao/aprovar',name: 'RetifFaltasEditProf',  component: RetifFaltasEditProfPortal },
+  {path:'/retificacao/criar',name:'RetifFaltasCreateAluno',component: RetifFaltasCreateAlunoPortal}
 ])
 export class AppComponent {
 	constructor(private router: Router) {}

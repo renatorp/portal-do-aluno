@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var headers_1 = require('../common/headers');
 require('rxjs/add/operator/toPromise');
 var angular2_jwt_1 = require('angular2-jwt');
 var session_1 = require('../session/session');
@@ -21,31 +22,39 @@ var AlunoService = (function () {
         this.baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
         this.notasUrl = this.baseUrl + 'Boletins/$1';
         this.historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
+        this.solicitarRetifFaltaUrl = this.baseUrl + 'RetificacoesFalta';
         this.gradeUrl = this.baseUrl + '/aluno/grade';
         this.retificacaoFaltaUrl = this.baseUrl + 'RetificacoesFalta';
     }
     AlunoService.prototype.getNotas = function (matricula) {
-        return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula))
+        return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
     AlunoService.prototype.getHistoricoEscolar = function (matriculaAluno) {
-        return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno))
+        return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
     AlunoService.prototype.getGradeCurricular = function () {
-        return this.http.get(this.gradeUrl)
+        return this.http.get(this.gradeUrl, { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
     AlunoService.prototype.getRetificacoesFaltas = function (matriculaAluno) {
-        return this.http.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno))
+        return this.http.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
+            .catch(this.handleError);
+    };
+    AlunoService.prototype.solicitarRetificacaoFalta = function (solicitacao) {
+        return this.http
+            .post(this.solicitarRetifFaltaUrl, JSON.stringify(solicitacao), { headers: headers_1.contentHeaders })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
             .catch(this.handleError);
     };
     AlunoService.prototype.handleError = function (error) {
@@ -61,18 +70,6 @@ var AlunoService = (function () {
             return url.replace('$1', param);
         }
         return url;
-    };
-    AlunoService.prototype.isUsuarioAluno = function (usuario) {
-        if (usuario != null && usuario.IdPerfil == 1) {
-            return true;
-        }
-        return false;
-    };
-    AlunoService.prototype.isUsuarioProfessor = function (usuario) {
-        if (usuario != null && usuario.IdPerfil == 2) {
-            return true;
-        }
-        return false;
     };
     AlunoService = __decorate([
         core_1.Injectable(), 
