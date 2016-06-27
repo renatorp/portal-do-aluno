@@ -2,12 +2,12 @@
 
 Instruções para execução:
 
-Instalar Node v 5.0.0
+ - Instalar Node v 5.0.0
 
-git clone https://github.com/renatorp/portal-do-aluno.git
+ - git clone https://github.com/renatorp/portal-do-aluno.git
 
-cd portal-do-aluno/
+ - cd portal-do-aluno/
 
-npm install
+ - npm install
 
-npm start
+ - npm start
