@@ -34,7 +34,7 @@ export class AlunoService {
 	}
 
 	getGradeCurricular(idAluno :number): Promise<GradeCurricular> {
-	     return this.authHttp.get(this.mountUrlWithParam(this.gradeUrl), { headers: contentHeaders })
+	     return this.authHttp.get(this.gradeUrl, { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);

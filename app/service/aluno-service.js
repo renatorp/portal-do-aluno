@@ -35,7 +35,7 @@ var AlunoService = (function () {
             .catch(this.handleError);
     };
     AlunoService.prototype.getGradeCurricular = function (idAluno) {
-        return this.authHttp.get(this.mountUrlWithParam(this.gradeUrl), { headers: headers_1.contentHeaders })
+        return this.authHttp.get(this.gradeUrl, { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
