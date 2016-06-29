@@ -21,7 +21,7 @@ var DisciplinaService = (function () {
         this.disciplinasUrl = this.baseUrl + 'Disciplinas/Matricula/$1';
     }
     DisciplinaService.prototype.getDisciplinasByMatricula = function (matricula) {
-        return this.http.get(this.mountUrlWithParam(this.disciplinasUrl, matricula), { headers: headers_1.contentHeaders })
+        return this.authHttp.get(this.mountUrlWithParam(this.disciplinasUrl, matricula), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);

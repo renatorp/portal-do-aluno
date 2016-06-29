@@ -17,24 +17,24 @@ export class AlunoService {
 	private baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
 	private notasUrl = this.baseUrl + 'Boletins/$1';
 	private historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
-	private gradeUrl = this.baseUrl + 'Alunos/$1/GradeCurricular';
+	private gradeUrl = this.baseUrl + 'Alunos/MinhaGradeCurricular';
 
 	getNotas(matricula :number): Promise<Boletim> {
-	     return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula), { headers: contentHeaders })
+	     return this.authHttp.get(this.mountUrlWithParam(this.notasUrl, matricula), { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
 
 	getHistoricoEscolar(matriculaAluno :number): Promise<HistoricoEscolar[]> {
-	     return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno), { headers: contentHeaders })
+	     return this.authHttp.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno), { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
 
-	getGradeCurricular(matriculaAluno :number): Promise<GradeCurricular> {
-	     return this.http.get(this.mountUrlWithParam(this.gradeUrl, matriculaAluno), { headers: contentHeaders })
+	getGradeCurricular(idAluno :number): Promise<GradeCurricular> {
+	     return this.authHttp.get(this.mountUrlWithParam(this.gradeUrl), { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);

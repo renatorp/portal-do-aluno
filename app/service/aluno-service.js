@@ -20,22 +20,22 @@ var AlunoService = (function () {
         this.baseUrl = 'https://sistemaacademico.azurewebsites.net/api/';
         this.notasUrl = this.baseUrl + 'Boletins/$1';
         this.historicoUrl = this.baseUrl + 'Alunos/$1/Historico';
-        this.gradeUrl = this.baseUrl + 'Alunos/$1/GradeCurricular';
+        this.gradeUrl = this.baseUrl + 'Alunos/MinhaGradeCurricular';
     }
     AlunoService.prototype.getNotas = function (matricula) {
-        return this.http.get(this.mountUrlWithParam(this.notasUrl, matricula), { headers: headers_1.contentHeaders })
+        return this.authHttp.get(this.mountUrlWithParam(this.notasUrl, matricula), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
     AlunoService.prototype.getHistoricoEscolar = function (matriculaAluno) {
-        return this.http.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno), { headers: headers_1.contentHeaders })
+        return this.authHttp.get(this.mountUrlWithParam(this.historicoUrl, matriculaAluno), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
-    AlunoService.prototype.getGradeCurricular = function (matriculaAluno) {
-        return this.http.get(this.mountUrlWithParam(this.gradeUrl, matriculaAluno), { headers: headers_1.contentHeaders })
+    AlunoService.prototype.getGradeCurricular = function (idAluno) {
+        return this.authHttp.get(this.mountUrlWithParam(this.gradeUrl), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);

@@ -14,7 +14,7 @@ export class DisciplinaService {
 	private disciplinasUrl = this.baseUrl + 'Disciplinas/Matricula/$1';
 	
 	getDisciplinasByMatricula(matricula :number): Promise<OfertaDisciplina[]> {
-	     return this.http.get(this.mountUrlWithParam(this.disciplinasUrl, matricula), { headers: contentHeaders })
+	     return this.authHttp.get(this.mountUrlWithParam(this.disciplinasUrl, matricula), { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);

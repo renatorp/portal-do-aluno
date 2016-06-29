@@ -26,19 +26,19 @@ var RetificacaoFaltasService = (function () {
         this.buscaRetificacao = this.baseUrl + 'RetificacoesFalta/$1';
     }
     RetificacaoFaltasService.prototype.aprovarRetificacao = function (retificacao) {
-        return this.http.put(this.mountUrlWithParam(this.aprovarRetificacaoUrl, retificacao.Id), JSON.stringify(retificacao), { headers: headers_1.contentHeaders })
+        return this.authHttp.put(this.mountUrlWithParam(this.aprovarRetificacaoUrl, retificacao.Id), JSON.stringify(retificacao), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(function (res) { })
             .catch(this.handleError);
     };
     RetificacaoFaltasService.prototype.rejeitarRetificacao = function (retificacao) {
-        return this.http.put(this.mountUrlWithParam(this.rejeitarRetificacaoUrl, retificacao.Id), JSON.stringify(retificacao), { headers: headers_1.contentHeaders })
+        return this.authHttp.put(this.mountUrlWithParam(this.rejeitarRetificacaoUrl, retificacao.Id), JSON.stringify(retificacao), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(function (res) { })
             .catch(this.handleError);
     };
     RetificacaoFaltasService.prototype.getRetificacaoFaltasById = function (idRetificacao) {
-        return this.http.get(this.mountUrlWithParam(this.buscaRetificacao, idRetificacao), { headers: headers_1.contentHeaders })
+        return this.authHttp.get(this.mountUrlWithParam(this.buscaRetificacao, idRetificacao), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
@@ -58,19 +58,19 @@ var RetificacaoFaltasService = (function () {
         }); */
     };
     RetificacaoFaltasService.prototype.getTodasSolicitacoes = function () {
-        return this.http.get(this.buscarSolicitacoesUrl, { headers: headers_1.contentHeaders })
+        return this.authHttp.get(this.buscarSolicitacoesUrl, { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
     RetificacaoFaltasService.prototype.getRetificacoesFaltasByMatricula = function (matriculaAluno) {
-        return this.http.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno), { headers: headers_1.contentHeaders })
+        return this.authHttp.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno), { headers: headers_1.contentHeaders })
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     };
     RetificacaoFaltasService.prototype.solicitarRetificacaoFalta = function (solicitacao) {
-        return this.http
+        return this.authHttp
             .post(this.solicitarRetifFaltaUrl, JSON.stringify({
             "IdMatricula": solicitacao.IdMatricula,
             "IdOferta": solicitacao.IdOferta,

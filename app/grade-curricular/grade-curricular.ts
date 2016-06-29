@@ -15,8 +15,8 @@ export class GradeCurricularPortal  implements OnInit {
 
 	ngOnInit(){
 		let user = this.session.getCurrentUser();
-		if (user && user.IdMatriculaAtual) {
-			this.alunoService.getGradeCurricular(user.IdMatriculaAtual).then(gradeCurricular => this.gradeCurricular = gradeCurricular);
+		if (user) {
+			this.alunoService.getGradeCurricular(user.Id).then(gradeCurricular => this.gradeCurricular = gradeCurricular);
 		}
 	}
 }

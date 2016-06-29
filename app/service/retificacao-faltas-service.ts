@@ -20,21 +20,21 @@ export class RetificacaoFaltasService {
 
 
 	aprovarRetificacao(retificacao: RetificacaoFalta): Promise<void> {
-	     return this.http.put(this.mountUrlWithParam(this.aprovarRetificacaoUrl, retificacao.Id), JSON.stringify(retificacao),  { headers: contentHeaders })
+	     return this.authHttp.put(this.mountUrlWithParam(this.aprovarRetificacaoUrl, retificacao.Id), JSON.stringify(retificacao),  { headers: contentHeaders })
 	     		.toPromise()
                 .then(function(res){})
                 .catch(this.handleError);
 	}
 
 	rejeitarRetificacao(retificacao: RetificacaoFalta): Promise<void> {
-	     return this.http.put(this.mountUrlWithParam(this.rejeitarRetificacaoUrl, retificacao.Id), JSON.stringify(retificacao), { headers: contentHeaders })
+	     return this.authHttp.put(this.mountUrlWithParam(this.rejeitarRetificacaoUrl, retificacao.Id), JSON.stringify(retificacao), { headers: contentHeaders })
 	     		.toPromise()
                 .then(function(res){})
                 .catch(this.handleError);
 	}
 
 	getRetificacaoFaltasById(idRetificacao: number): Promise<RetificacaoFalta> {
-		return this.http.get(this.mountUrlWithParam(this.buscaRetificacao, idRetificacao), { headers: contentHeaders })
+		return this.authHttp.get(this.mountUrlWithParam(this.buscaRetificacao, idRetificacao), { headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
@@ -56,14 +56,14 @@ export class RetificacaoFaltasService {
 	}
 
 	getTodasSolicitacoes(): Promise<RetificacaoFalta[]> {
-		return this.http.get(this.buscarSolicitacoesUrl,{ headers: contentHeaders })
+		return this.authHttp.get(this.buscarSolicitacoesUrl,{ headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
 	}
 
 	getRetificacoesFaltasByMatricula(matriculaAluno :number): Promise<RetificacaoFalta[]> {
-		return this.http.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno),{ headers: contentHeaders })
+		return this.authHttp.get(this.mountUrlWithParam(this.retificacaoFaltaUrl, matriculaAluno),{ headers: contentHeaders })
 	     		.toPromise()
                 .then(this.extractData)
                 .catch(this.handleError);
@@ -71,7 +71,7 @@ export class RetificacaoFaltasService {
 
 	solicitarRetificacaoFalta(solicitacao :RetificacaoFalta): Promise<RetificacaoFalta> {
 		
-    	return this.http
+    	return this.authHttp
                .post(this.solicitarRetifFaltaUrl, JSON.stringify({
                		"IdMatricula": solicitacao.IdMatricula,
 				    "IdOferta": solicitacao.IdOferta,

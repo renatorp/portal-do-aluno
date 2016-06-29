@@ -21,8 +21,8 @@ var GradeCurricularPortal = (function () {
     GradeCurricularPortal.prototype.ngOnInit = function () {
         var _this = this;
         var user = this.session.getCurrentUser();
-        if (user && user.IdMatriculaAtual) {
-            this.alunoService.getGradeCurricular(user.IdMatriculaAtual).then(function (gradeCurricular) { return _this.gradeCurricular = gradeCurricular; });
+        if (user) {
+            this.alunoService.getGradeCurricular(user.Id).then(function (gradeCurricular) { return _this.gradeCurricular = gradeCurricular; });
         }
     };
     GradeCurricularPortal = __decorate([
