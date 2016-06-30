@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var aluno_service_1 = require('../service/aluno-service');
-var base_1 = require('../base/base');
 var session_1 = require('../session/session');
 var GradeCurricularPortal = (function () {
     function GradeCurricularPortal(alunoService, session) {
@@ -27,8 +26,7 @@ var GradeCurricularPortal = (function () {
     };
     GradeCurricularPortal = __decorate([
         core_1.Component({
-            templateUrl: 'app/grade-curricular/grade-curricular.html',
-            directives: [base_1.BasePage]
+            templateUrl: 'app/grade-curricular/grade-curricular.html'
         }), 
         __metadata('design:paramtypes', [aluno_service_1.AlunoService, session_1.Session])
     ], GradeCurricularPortal);

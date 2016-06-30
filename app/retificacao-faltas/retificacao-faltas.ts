@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RetificacaoFaltasService } from '../service/retificacao-faltas-service';
 import { UsuarioService } from '../service/usuario-service';
-import { BasePage } from '../base/base';
 import { Str2DatePipe } from '../pipes/str2date-pipe';
 import { Session } from '../session/session';
 import { RetificacaoFalta } from '../entity/retificacao-falta';
@@ -10,7 +9,6 @@ import { Router } from '@angular/router-deprecated';
 
 @Component({
   templateUrl: 'app/retificacao-faltas/retificacao-faltas.html',
-  directives: [BasePage],
   pipes: [Str2DatePipe],
   providers: [RetificacaoFaltasService]
 })

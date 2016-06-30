@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AlunoService } from '../service/aluno-service';
-import { BasePage } from '../base/base';
 import { HistoricoEscolar } from '../entity/historico-escolar';
 import { Session } from '../session/session';
 import { Usuario } from '../entity/usuario';
 
 @Component({
   templateUrl: 'app/historico-escolar/historico-escolar.html',
-  directives: [BasePage]
 })
 export class HistoricoEscolarPortal implements OnInit {
 	listaHistorico: HistoricoEscolar[] = [];

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { AlunoService } from '../service/aluno-service';
-import { BasePage } from '../base/base';
 
 
 @Component({
+selector: 'home',
   template: `
-<base>
-  <content>
+
   <div id="page-wrapper">
 <div class="container-fluid">
 
@@ -34,10 +33,7 @@ import { BasePage } from '../base/base';
 </div>
 <!-- /.container-fluid -->
 </div>
- </content>
-<base>
-  `,
-  directives: [BasePage]
+  `
 })
 export class HomePortal  {
 }

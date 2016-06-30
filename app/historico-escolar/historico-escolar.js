@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var aluno_service_1 = require('../service/aluno-service');
-var base_1 = require('../base/base');
 var session_1 = require('../session/session');
 var HistoricoEscolarPortal = (function () {
     function HistoricoEscolarPortal(alunoService, session) {
@@ -32,7 +31,6 @@ var HistoricoEscolarPortal = (function () {
     HistoricoEscolarPortal = __decorate([
         core_1.Component({
             templateUrl: 'app/historico-escolar/historico-escolar.html',
-            directives: [base_1.BasePage]
         }), 
         __metadata('design:paramtypes', [aluno_service_1.AlunoService, session_1.Session])
     ], HistoricoEscolarPortal);

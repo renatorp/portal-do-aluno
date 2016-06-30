@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var session_1 = require('./session/session');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var home_1 = require('./home/home');
 var login_1 = require('./login/login');
@@ -24,13 +25,33 @@ var aluno_service_1 = require('./service/aluno-service');
 var usuario_service_1 = require('./service/usuario-service');
 var disciplina_service_1 = require('./service/disciplina-service');
 var AppComponent = (function () {
-    function AppComponent(router) {
+    function AppComponent(router, loginService, session, usuarioService) {
         this.router = router;
+        this.loginService = loginService;
+        this.session = session;
+        this.usuarioService = usuarioService;
+        this.title = 'Portal do Aluno';
     }
+    AppComponent.prototype.ngOnInit = function () {
+        var user = this.session.getCurrentUser();
+        if (user == null || user.IdPerfil == null) {
+            this.logout();
+        }
+    };
+    AppComponent.prototype.logout = function () {
+        var _this = this;
+        this.loginService.logout(function () { return _this.router.navigateByUrl('/login'); });
+    };
+    AppComponent.prototype.isRouterActive = function (path) {
+        return this.router.isRouteActive(this.router.generate([path]));
+    };
+    AppComponent.prototype.isUsuarioAluno = function () {
+        return this.usuarioService.isUsuarioAluno(this.session.getCurrentUser());
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'portal-aluno',
-            template: "\n\t\t<router-outlet></router-outlet>\n\t",
+            templateUrl: 'app/app.component.html',
             directives: [logged_in_outlet_1.LoggedInRouterOutlet, router_deprecated_1.RouterLink],
             providers: [router_deprecated_1.ROUTER_PROVIDERS,
                 login_service_1.LoginService,
@@ -49,7 +70,7 @@ var AppComponent = (function () {
             { path: '/retificacao/aprovar', name: 'RetifFaltasEditProf', component: retif_faltas_edit_prof_1.RetifFaltasEditProfPortal },
             { path: '/retificacao/criar', name: 'RetifFaltasCreateAluno', component: retif_faltas_create_aluno_1.RetifFaltasCreateAlunoPortal }
         ]), 
-        __metadata('design:paramtypes', [router_deprecated_1.Router])
+        __metadata('design:paramtypes', [router_deprecated_1.Router, login_service_1.LoginService, session_1.Session, usuario_service_1.UsuarioService])
     ], AppComponent);
     return AppComponent;
 }());

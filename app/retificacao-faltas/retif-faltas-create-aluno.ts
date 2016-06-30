@@ -3,7 +3,6 @@ import { Router } from '@angular/router-deprecated';
 import { RetificacaoFaltasService } from '../service/retificacao-faltas-service';
 import { UsuarioService } from '../service/usuario-service';
 import { DisciplinaService } from '../service/disciplina-service';
-import { BasePage } from '../base/base';
 import { Session } from '../session/session';
 import { RetificacaoFalta } from '../entity/retificacao-falta';
 import { Usuario } from '../entity/usuario';
@@ -13,7 +12,6 @@ declare var jQuery:any;
 
 @Component({
   templateUrl: 'app/retificacao-faltas/retif-faltas-create-aluno.html',
-  directives: [BasePage],
   providers: [RetificacaoFaltasService]
 })
 export class  RetifFaltasCreateAlunoPortal implements OnInit {

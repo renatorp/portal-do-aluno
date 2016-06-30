@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var aluno_service_1 = require('../service/aluno-service');
-var base_1 = require('../base/base');
 var str2date_pipe_1 = require('../pipes/str2date-pipe');
 var session_1 = require('../session/session');
 var NotasPortal = (function () {
@@ -29,7 +28,6 @@ var NotasPortal = (function () {
     NotasPortal = __decorate([
         core_1.Component({
             templateUrl: 'app/notas/notas.html',
-            directives: [base_1.BasePage],
             pipes: [str2date_pipe_1.Str2DatePipe]
         }), 
         __metadata('design:paramtypes', [aluno_service_1.AlunoService, session_1.Session])

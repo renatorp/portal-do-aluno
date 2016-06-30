@@ -13,7 +13,6 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var retificacao_faltas_service_1 = require('../service/retificacao-faltas-service');
 var usuario_service_1 = require('../service/usuario-service');
 var disciplina_service_1 = require('../service/disciplina-service');
-var base_1 = require('../base/base');
 var session_1 = require('../session/session');
 var retificacao_falta_1 = require('../entity/retificacao-falta');
 var RetifFaltasCreateAlunoPortal = (function () {
@@ -72,7 +71,6 @@ var RetifFaltasCreateAlunoPortal = (function () {
     RetifFaltasCreateAlunoPortal = __decorate([
         core_1.Component({
             templateUrl: 'app/retificacao-faltas/retif-faltas-create-aluno.html',
-            directives: [base_1.BasePage],
             providers: [retificacao_faltas_service_1.RetificacaoFaltasService]
         }), 
         __metadata('design:paramtypes', [retificacao_faltas_service_1.RetificacaoFaltasService, usuario_service_1.UsuarioService, session_1.Session, router_deprecated_1.Router, core_1.ElementRef, disciplina_service_1.DisciplinaService])

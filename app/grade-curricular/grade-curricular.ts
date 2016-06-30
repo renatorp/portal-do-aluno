@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AlunoService } from '../service/aluno-service';
-import { BasePage } from '../base/base';
 import { GradeCurricular } from '../entity/grade-curricular'
 import { Session } from '../session/session';
 
 @Component({
-  templateUrl: 'app/grade-curricular/grade-curricular.html',
-  directives: [BasePage]
+  templateUrl: 'app/grade-curricular/grade-curricular.html'
 })
 export class GradeCurricularPortal  implements OnInit {
 	gradeCurricular: GradeCurricular = null;

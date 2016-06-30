@@ -2,14 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, RouteParams } from '@angular/router-deprecated';
 import { UsuarioService } from '../service/usuario-service';
 import { RetificacaoFaltasService } from '../service/retificacao-faltas-service';
-import { BasePage } from '../base/base';
 import { Session } from '../session/session';
 import { RetificacaoFalta } from '../entity/retificacao-falta';
 import { Usuario } from '../entity/usuario';
 
 @Component({
   templateUrl: 'app/retificacao-faltas/retif-faltas-edit-prof.html',
-  directives: [BasePage],
   providers: [RetificacaoFaltasService]
 })
 export class  RetifFaltasEditProfPortal implements OnInit {

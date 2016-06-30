@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var retificacao_faltas_service_1 = require('../service/retificacao-faltas-service');
 var usuario_service_1 = require('../service/usuario-service');
-var base_1 = require('../base/base');
 var str2date_pipe_1 = require('../pipes/str2date-pipe');
 var session_1 = require('../session/session');
 var router_deprecated_1 = require('@angular/router-deprecated');
@@ -72,7 +71,6 @@ var RetificacaoFaltasPortal = (function () {
     RetificacaoFaltasPortal = __decorate([
         core_1.Component({
             templateUrl: 'app/retificacao-faltas/retificacao-faltas.html',
-            directives: [base_1.BasePage],
             pipes: [str2date_pipe_1.Str2DatePipe],
             providers: [retificacao_faltas_service_1.RetificacaoFaltasService]
         }), 

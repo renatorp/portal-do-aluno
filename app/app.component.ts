@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Usuario } from './entity/usuario';
+import { Session } from './session/session';
 import { RouteConfig, ROUTER_PROVIDERS, RouterLink, Router } from '@angular/router-deprecated';
 import { HomePortal } from './home/home';
 import { LoginPortal } from './login/login';
@@ -16,9 +18,7 @@ import { DisciplinaService } from './service/disciplina-service';
 
 @Component({
 	selector: 'portal-aluno',
-	template: `
-		<router-outlet></router-outlet>
-	`,
+  templateUrl: 'app/app.component.html',
 	directives: [LoggedInRouterOutlet, RouterLink],
 	providers: [ROUTER_PROVIDERS, 
               LoginService, 
@@ -37,6 +37,30 @@ import { DisciplinaService } from './service/disciplina-service';
   { path: '/retificacao/aprovar',name: 'RetifFaltasEditProf',  component: RetifFaltasEditProfPortal },
   {path:'/retificacao/criar',name:'RetifFaltasCreateAluno',component: RetifFaltasCreateAlunoPortal}
 ])
-export class AppComponent {
-	constructor(private router: Router) {}
+export class AppComponent implements OnInit {
+
+   title = 'Portal do Aluno';
+
+    constructor(private router: Router, private loginService: LoginService, private session: Session, private usuarioService: UsuarioService) {}
+
+    ngOnInit() {
+      let user = this.session.getCurrentUser();
+
+      if (user == null || user.IdPerfil == null) {
+        this.logout();
+      }
+
+    }
+
+    logout() {
+        this.loginService.logout(() => this.router.navigateByUrl('/login'));
+    }
+
+    isRouterActive(path :string): boolean {
+        return this.router.isRouteActive(this.router.generate([path]));
+    }
+
+    public isUsuarioAluno(): boolean {
+        return this.usuarioService.isUsuarioAluno(this.session.getCurrentUser());
+    }
 }
